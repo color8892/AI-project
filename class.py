@@ -1,3 +1,12 @@
+"""
+This script performs image classification and organization based on visual similarity using the K-Means clustering algorithm.
+
+Functionality:
+- Resizes images in a specified folder to a predefined size.
+- Applies K-Means clustering to group similar images together.
+- Moves the images to different class folders based on the assigned cluster labels.
+"""
+
 import os
 import cv2
 import numpy as np
@@ -17,11 +26,6 @@ def resize_images(image_folder, output_folder):
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = cv2.resize(img, (200, 200))
             cv2.imwrite(os.path.join(output_folder, f'{filename[:-4]}_original.png'), img)
-
-            # Save and append the horizontally flipped image
-            img_flipped = cv2.flip(img, 1)
-            cv2.imwrite(os.path.join(output_folder, f'{filename[:-4]}_flipped.png'), img_flipped)
-            images.append(img_flipped.flatten())
 
             # Save and append the 90 degree rotated image
             img_rotated_90 = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
