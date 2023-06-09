@@ -4,13 +4,13 @@ from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-batch_size = 32
+batch_size = 64
 learning_rate = 1e-3
 num_epochs = 10
 
 transform = transforms.Compose([
     transforms.Grayscale(),
-    transforms.Resize((32, 128)),
+    transforms.Resize((200, 200)),
     transforms.ToTensor(),
 ])
 
@@ -27,7 +27,8 @@ class CRNN(nn.Module):
         self.pool1 = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)
         self.pool2 = nn.MaxPool2d(2, 2)
-        self.fc1 = nn.Linear(64*8*32, 128)
+        self.fc1 = nn.Linear(64*50*50, 128)
+
         self.lstm = nn.LSTM(input_size=128, hidden_size=64, num_layers=2, batch_first=True, bidirectional=True)
         self.fc2 = nn.Linear(128, 3)
 
@@ -82,7 +83,7 @@ with torch.no_grad():
 
 
 #Set parameters such as batch size, learning rate, and the number of epochs.
-#Define image transformations, including converting images to grayscale, resizing them to 32x128 pixels, and converting them to tensors.
+#Define image transformations, including converting images to grayscale, resizing them to 200*200 pixels, and converting them to tensors.
 #Load the training and test datasets using the ImageFolder class and apply the defined transformations.
 #Create data loaders for the training and test datasets to batch and load the data.
 #Define the CRNN (Convolutional Recurrent Neural Network) model class, including convolutional layers, pooling layers, fully connected layers, LSTM layer, and output layer.
