@@ -1,3 +1,14 @@
+"""
+This script enhances image quality using the ESRGAN (Enhanced Super-Resolution Generative Adversarial Network) model.
+
+Functionality:
+- Downloads the ESRGAN model from TensorFlow Hub.
+- Defines functions for preprocessing and postprocessing images.
+- Enhances the image quality by passing images through the ESRGAN model.
+- Replaces the original image files with the enhanced versions.
+
+"""
+
 import os
 import tensorflow as tf
 import tensorflow_hub as hub
