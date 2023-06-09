@@ -4,9 +4,9 @@ from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-batch_size = 64
-learning_rate = 1e-2
-num_epochs = 10
+batch_size = 32
+learning_rate = 1e-3
+num_epochs = 30
 
 transform = transforms.Compose([
     transforms.Grayscale(),
@@ -16,25 +16,22 @@ transform = transforms.Compose([
 
 
 train_dataset = datasets.ImageFolder('C:/Users/mnb35/Downloads/PYTHON/SIGN/CAR_CLASSIFIED', transform=transform)
-#test_dataset = datasets.ImageFolder('C:/Users/mnb35/Downloads/PYTHON/SIGN/TEST_CLASSIFIED', transform=transform)
+test_dataset = datasets.ImageFolder('C:/Users/mnb35/Downloads/PYTHON/SIGN/TEST_CLASSIFIED', transform=transform)
+
+train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
+
+#from torch.utils.data import random_split
+
+#total_samples = len(train_dataset)
+#split_ratio = 0.2
+#test_samples = int(total_samples * split_ratio)
+#train_samples = total_samples - test_samples
+
+#train_dataset, test_dataset = random_split(train_dataset, [train_samples, test_samples])
 
 #train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 #test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
-
-from torch.utils.data import random_split
-
-# 假設你想將20%的訓練數據作為測試數據
-total_samples = len(train_dataset)
-split_ratio = 0.2 # 分割比例
-test_samples = int(total_samples * split_ratio)
-train_samples = total_samples - test_samples
-
-# 使用random_split進行數據分割
-train_dataset, test_dataset = random_split(train_dataset, [train_samples, test_samples])
-
-# 然後，你可以像之前一樣創建數據加載器
-train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
-test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False)
 
 
 class CRNN(nn.Module):
